@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_4/login.dart';
+// import 'package:flutter_application_4/presentation/screens/login.dart';
+import 'package:flutter_application_4/controllers/sign_up_controller.dart';
+import 'package:get/get.dart';
 
-class WidgetRegister extends StatefulWidget {
-  const WidgetRegister({super.key});
+class WidgetRegister extends StatelessWidget {
+  WidgetRegister({super.key});
+  final controller = Get.put(SignUpController());
 
-  @override
-  State<WidgetRegister> createState() => _WidgetRegisterState();
-}
-
-class _WidgetRegisterState extends State<WidgetRegister> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,6 +34,7 @@ class _WidgetRegisterState extends State<WidgetRegister> {
           child: ListView(
             children: [
               TextFormField(
+                onChanged: controller.handleName,
                 decoration: const InputDecoration(
                     hintText: 'Username', border: OutlineInputBorder()),
               ),
@@ -43,6 +42,7 @@ class _WidgetRegisterState extends State<WidgetRegister> {
                 height: 12,
               ),
               TextFormField(
+                onChanged: controller.handleEmail,
                 decoration: const InputDecoration(
                     hintText: 'Email', border: OutlineInputBorder()),
               ),
@@ -50,6 +50,7 @@ class _WidgetRegisterState extends State<WidgetRegister> {
                 height: 12,
               ),
               TextFormField(
+                onChanged: controller.handlePassword,
                 obscureText: true,
                 decoration: const InputDecoration(
                     suffixIcon: Icon(Icons.remove_red_eye),
@@ -59,23 +60,23 @@ class _WidgetRegisterState extends State<WidgetRegister> {
               const SizedBox(
                 height: 12,
               ),
-              TextFormField(
-                decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    hintText: 'Fecha de nacimiento',
-                    suffixIcon: IconButton(
-                        onPressed: () {
-                          showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime.now()
-                                .subtract(const Duration(days: 3650)),
-                            lastDate:
-                                DateTime.now().add(const Duration(days: 3650)),
-                          );
-                        },
-                        icon: const Icon(Icons.calendar_month_outlined))),
-              ),
+              // TextFormField(
+              //   decoration: InputDecoration(
+              //       border: const OutlineInputBorder(),
+              //       hintText: 'Fecha de nacimiento',
+              //       suffixIcon: IconButton(
+              //           onPressed: () {
+              //             showDatePicker(
+              //               context: context,
+              //               initialDate: DateTime.now(),
+              //               firstDate: DateTime.now()
+              //                   .subtract(const Duration(days: 3650)),
+              //               lastDate:
+              //                   DateTime.now().add(const Duration(days: 3650)),
+              //             );
+              //           },
+              //           icon: const Icon(Icons.calendar_month_outlined))),
+              // ),
               const SizedBox(
                 height: 15,
               ),
@@ -83,10 +84,7 @@ class _WidgetRegisterState extends State<WidgetRegister> {
                 padding: const EdgeInsets.all(15.0),
                 child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return const WidgetLogin();
-                      }));
+                      controller.handleSignUp();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blueAccent,

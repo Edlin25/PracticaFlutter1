@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_4/register.dart';
+import 'package:flutter_application_4/presentation/screens/register.dart';
+import 'package:flutter_application_4/controllers/sign_in_controller.dart';
+import 'package:get/get.dart';
 
-class WidgetLogin extends StatefulWidget {
-  const WidgetLogin({super.key});
+class WidgetLogin extends StatelessWidget {
+  WidgetLogin({super.key});
+  final controller = Get.put(SignInController());
 
-  @override
-  State<WidgetLogin> createState() => _WidgetLoginState();
-}
-
-class _WidgetLoginState extends State<WidgetLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +51,7 @@ class _WidgetLoginState extends State<WidgetLogin> {
               ),
             ),
             TextFormField(
+              onChanged: controller.handleEmail,
               decoration: const InputDecoration(
                   hintText: 'Email', border: OutlineInputBorder()),
             ),
@@ -60,6 +59,7 @@ class _WidgetLoginState extends State<WidgetLogin> {
               height: 12,
             ),
             TextFormField(
+              onChanged: controller.handlePassword,
               obscureText: true,
               decoration: const InputDecoration(
                   suffixIcon: Icon(Icons.remove_red_eye),
@@ -78,10 +78,7 @@ class _WidgetLoginState extends State<WidgetLogin> {
               padding: const EdgeInsets.all(15.0),
               child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return const WidgetRegister();
-                    }));
+                    controller.handleSignIn();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blueAccent,
@@ -101,7 +98,7 @@ class _WidgetLoginState extends State<WidgetLogin> {
                         onPressed: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            return const WidgetRegister();
+                            return WidgetRegister();
                           }));
                         },
                         style: ElevatedButton.styleFrom(
